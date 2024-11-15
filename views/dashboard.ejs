@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>dashboard</title>
+</head>
+<body>
+   <header>
+    <h1>tableau de bord de :{name}</h1>
+   </header> 
+   <main>
+     <h2>utilisateur</h2>
+    <div>
+      <h3>créer un utilisateur</h3>
+     <form action="/dashboard/createUser" method="post">
+        <label for="name">Nom</label>
+        <input type="text" name="name" value="<%User.name %>" id="name" required><br>
+        <label for="email">Email</label>
+        <input type="email" name="email" value="User.email" id="email" required><br>
+        <label for="password">Mot de passe</label>
+        <input type="text" name="password" value="password" required  ><br>
+        <button>créer</button>
+     </form>
+    </div>
+
+    <div>
+        <h3>modifier un utilisateur</h3>
+        <form action="/dashboard/uptadeUser:id" method="get">
+        <label for="name">Nom:</label>
+        <input type="text" name="name" value="<%User.name %>" id="name" required><br>
+        <label for="email">Email:</label>
+        <input type="email" name="email" value="<%User.email %>" id="email" required><br>
+        <label for="User.password">Mot de passe</label>
+        <input type="text" name="password" value="password" id="password" required><br>
+        <button type="submit" >modifier</button>
+        
+        </form>    
+    </div>
+
+    <div>
+        <h3>supprimer un utilisateur</h3>
+        <form action="/dashboard/deleteUser:User:id"  method="get">
+            <button type="submit">supprimer</button>
+            </form>    
+    </div>
+    <h2>Catway</h2>
+    <div>
+    <h3>créer un catway </h3>
+        <form action="/dashboard/addCatway" method="post">
+            <label for="catwaysNumber"> Catways Number</label>
+            <input type="text" name="catwaysNumber"  id="catwaysNumber" required><br> 
+            <label for="type">type</label>
+            <select name="type" id="type">
+            <option value="long">long</option>
+            <option value="short ">short</option>
+            </select>
+            <label for="catwayState">Catway State</label>
+            <input type="text" name="catwaysNumber"  id="catwaysNumber" required><br>
+            <button type="submit">créer</button>
+         </form>
+    </div>
+   
+    <div>
+       <h3>modifier un catway</h3>
+        <form action="/dashboard//uptdateCatway:id" method="get">
+            <label for="catwaysNumber"> Catways Number:</label>
+            <input type="text" name="catwaysNumber"  id="catwaysNumber" required><br>
+            <label for="type">type</label>
+            <select name="type" id="type">
+                <option value="long">long</option>
+                <option value="short">short</option>
+                </select>
+            <label for="catwaysNumber">Catway State:</label>
+            <input type="text" name="catwaysNumber" id="catwaysNumber" required><br>
+            <button>modifier</button>
+        </form>
+ 
+    </div>
+
+    <div>
+        <h3>supprimer un catway</h3>
+       <form action="/dashboard//deleteCatway:id" method="get">
+        <input type="text" name="catwaysNumber" placeholder="Id du catway" required><br>
+        <button type="submit">supprimer</button>
+    </div>
+²
+    <div>
+        <h3>afficher les details d'un catway</h3>
+        <form action="/dashboard/catways:id" method="get">
+            <input type="text" name="catwaysNumber" placeholder="numero du catway" required><br>
+            <button type="submit">details></button>
+        </form>
+    </div>
+    <h2>reservation</h2>
+    <div>
+        <h3>ajouter une reservation</h3>
+        <form action="/dashboard/createReservation" method="post">
+            <label for="catwaysNumber"> Catway Number:</label>
+            <input type="text" name="catwaysNumber" id="catwaysNumber" required><br>
+            <label for="clientName"> Nom du client:</label>
+            <input type="text" name="clientName" id="clientName" required><br>
+            <label for="boatName">Nom du bateau</label>
+            <input type="text" name="boatName" id="boatName" required><br>
+            <label for="chekIn"> chekIn:</label>
+            <input type="text" name="chekIn" id="chekIn" required><br>
+            <label for="checkout">checkout</label>
+            <input type="date" name="checkout" id="checkout" required><br>
+            <button type="submit">reserver</button>
+         </form>
+    </div>
+
+    <div>
+        <h3>supprimer une reservation</h3>
+         <form action="/dashboard/deleteReservation" method="post">
+            <label for="catwaysNumber"> Catway Number:</label>
+            <input type="number" name="catwaysNumber"  placeholder="numero du catway" required> <br>
+            <label for="idReservation">Reservation:</label>
+            <input type="text" name="Reservation" placeholder="Id reservation" required>
+            <button type="submit">supprimer</button>
+         </form>
+    </div>
+    <div>
+         <!-- Formulaire pour récupérer les détails de réservations d'un catway -->
+         <form action="/dashboard/getReservationByCatway" method="get">
+            <h3>Detail des reservation pour un catway</h3>
+            <input type="text" name="catwayNumber" placeholder="Numéro du catway" required />
+            <button type="submit">Récupérer</button>
+          </form>
+    </div>
+
+    <div>
+         <!-- Formulaire pour récupérer le détail d'une réservation d'un catway -->
+        <h3>afficher les details d'une reservation</h3>
+        <form action="/dashboard/getReservationById">
+            <label for="catwaysNumber"> Catway Number:</label>
+            <input type="number" name="catwaysNumber" placeholder="numero du catway" required> <br>
+            <label for="idReservation">Reservation:</label>
+            <input type="text" name="Reservation" placeholder="Id reservation" required>
+            <button type="submit">details</button>
+        </form>
+      
+      
+    </div>
+   </main>
+
+   <footer>
+    <a href="/listCatways">list des catways</a> <br>
+     <a href="/listReservations">list des reservations</a> 
+   </footer>
+</body>
+</html>
