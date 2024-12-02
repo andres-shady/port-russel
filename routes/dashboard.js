@@ -21,7 +21,7 @@ router.get("/listReservationsByCatway",private, reservations.listReservationsByC
 router.put("/createReservation",reservations.createReservation); 
 router.delete("/deleteReservation:id",private, reservations.deleteReservation);
 
-const authentification = require("../service/authentification");
+const authentification = require("../service/authentification")
 router.post("/authenticate",  authentification.authenticate);
 router.get("getDashboard ",authentification.getDashboard)
 

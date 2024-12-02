@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require ('express');
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
@@ -7,7 +7,7 @@ const indexRouter = require("./routes/index");
 const dashboardRouter = require("./routes/dashboard");
 const Mongodb     = require("./db/mongo");
 
-Mongodb.DbConnect()
+Mongodb.DbConnect();
 
 const app = express();
 port = 5000
@@ -33,6 +33,7 @@ app.use('/dashboard', dashboardRouter);
 app.use(function(req,res,next){
     res.status(400).json({name: "port",version:'"0.0.0"',status:404 , message: "not found"});
 })
+
 
 app.set("view",path.join(__dirname,"views"))
 app.set ("view engine", "ejs")

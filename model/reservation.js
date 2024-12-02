@@ -1,6 +1,3 @@
-const { checkout } = require("../routes/dashboard");
-const catway = require("./catways");
-
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
