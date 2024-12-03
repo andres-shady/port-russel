@@ -1,46 +1,51 @@
-const express = require ('express');
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
-const cors  = require("cors");
-const indexRouter = require("./routes/index");
-const dashboardRouter = require("./routes/dashboard");
-const Mongodb     = require("./db/mongo");
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+require('dotenv').config();
+const methodOverride = require('method-override')
+const {swaggerUi, swaggerDocs} = require('./config/swagger')
 
-Mongodb.DbConnect();
+var indexRouter = require('./routes/index');
+const dashboardRouter = require('./routes/dashboard')
 
-const app = express();
-port = 5000
-app.listen(port,()=>{
-    console.log('bienvenue')
-})
+var app = express();
 
-app.use(cors({
-    exposedHeaders: ['Authorization'],
-    origin:"*"
-}))
+//importation de la base de donné avec MongoDB
+const mongoDb = require('./db/mongo');
+mongoDb.DbConnect();
 
-app.use(logger("dev"));
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));
 
-app.use("/", indexRouter);
+app.use('/', indexRouter);
 app.use('/dashboard', dashboardRouter);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
+// catch 404 and forward to error handler 
+app.use(function(req, res, next) {
+  next(createError(404));
+});
 
-app.use(function(req,res,next){
-    res.status(400).json({name: "port",version:'"0.0.0"',status:404 , message: "not found"});
-})
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-
-app.set("view",path.join(__dirname,"views"))
-app.set ("view engine", "ejs")
-
-app.get("/",(req,res) =>{
- res.send("hello world")
-})
-
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
 
 module.exports = app;
+
